@@ -60,7 +60,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     // MARK: - Queues
     
-    static let serialQueue = DispatchQueue(label: "com.apple.arkitexample.serialSceneKitQueue")
+    static let serialQueue = DispatchQueue(label: "com.flaviobittenca.arkit")
 	// Create instance variable for more readable access inside class
 	let serialQueue: DispatchQueue = ViewController.serialQueue
 	
@@ -107,7 +107,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 		sceneView.delegate = self
 		sceneView.session = session
 		// sceneView.showsStatistics = true
-		
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+        
 		sceneView.scene.enableEnvironmentMapWithIntensity(25, queue: serialQueue)
 		
 		setupFocusSquare()
@@ -143,7 +144,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
 		if let planeAnchor = anchor as? ARPlaneAnchor {
 			serialQueue.async {
-				self.addPlane(node: node, anchor: planeAnchor)
+				self.askToInsertGround(node: node, anchor: planeAnchor)
 				self.virtualObjectManager.checkIfObjectShouldMoveOntoPlane(anchor: planeAnchor, planeAnchorNode: node)
 			}
 		}
@@ -249,9 +250,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	
 	var planes = [ARPlaneAnchor: Plane]()
 	
-    func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
+    func askToInsertGround(node: SCNNode, anchor: ARPlaneAnchor) {
+        let actionSheetController: UIAlertController = UIAlertController(title: "Plane detected", message: "Would you like to add a ground texture?", preferredStyle: .actionSheet)
+        let yesAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
+            self.addPlane(node: node, anchor: anchor, ground: true)
+        }
+        let noAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
+            self.addPlane(node: node, anchor: anchor, ground: false)
+        }
+        actionSheetController.addAction(yesAction)
+        actionSheetController.addAction(noAction)
+        self.present(actionSheetController, animated: true, completion: nil)
+    }
+    
+    func addPlane(node: SCNNode, anchor: ARPlaneAnchor, ground: Bool) {
         
-		let plane = Plane(anchor)
+        let plane = Plane(anchor, ground: ground)
 		planes[anchor] = plane
 		node.addChildNode(plane)
 		
