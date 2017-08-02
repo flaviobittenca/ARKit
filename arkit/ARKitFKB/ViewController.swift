@@ -225,37 +225,70 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	}
 	
     // MARK: - Gesture Recognizers
-	
-	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-		
+    
+    func objectsResults(for touches: Set<UITouch>) -> [SCNHitTestResult] {
+        
         let touch = touches[touches.index(touches.startIndex, offsetBy: 0)]
         let touchLocation = touch.location(in: sceneView)
         
         var hitTestOptions = [SCNHitTestOption: Any]()
         hitTestOptions[SCNHitTestOption.boundingBoxOnly] = false
-        let results: [SCNHitTestResult] = sceneView.hitTest(touchLocation, options: hitTestOptions)
+        hitTestOptions[SCNHitTestOption.ignoreHiddenNodes] = true
+        hitTestOptions[SCNHitTestOption.searchMode] = SCNHitTestSearchMode.all.rawValue
+        return sceneView.hitTest(touchLocation, options: hitTestOptions)
+    }
+	
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let results = objectsResults(for: touches)
         for result in results {
             if let object = Plane.isNodePartOfPlane(result.node) {
                 object.setGroundMaterial()
+                break
             } else if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
+                print("touch on virtual object")
                 virtualObjectManager.reactToTouchesBegan(touches, with: event, in: self.sceneView)
+                break
             }
         }
 	}
 	
 	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-		virtualObjectManager.reactToTouchesMoved(touches, with: event)
+        let results = objectsResults(for: touches)
+        for result in results {
+            if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
+               virtualObjectManager.reactToTouchesMoved(touches, with: event)
+                break
+            }
+        }
 	}
 	
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-		if virtualObjectManager.virtualObjects.isEmpty {
-			return
-		}
-		virtualObjectManager.reactToTouchesEnded(touches, with: event)
+        
+        let results = objectsResults(for: touches)
+        for result in results {
+            if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
+                
+                if virtualObjectManager.virtualObjects.isEmpty {
+                    return
+                }
+                virtualObjectManager.reactToTouchesEnded(touches, with: event)
+                break
+            }
+        }
+
 	}
 	
 	override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-		virtualObjectManager.reactToTouchesCancelled(touches, with: event)
+        
+        let results = objectsResults(for: touches)
+        for result in results {
+            if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
+                
+                virtualObjectManager.reactToTouchesCancelled(touches, with: event)
+                break
+            }
+        }
+		
 	}
 	
     // MARK: - Planes

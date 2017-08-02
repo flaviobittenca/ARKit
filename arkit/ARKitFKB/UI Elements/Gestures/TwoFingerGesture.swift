@@ -72,6 +72,7 @@ class TwoFingerGesture: Gesture {
         
         var hitTestOptions = [SCNHitTestOption: Any]()
         hitTestOptions[SCNHitTestOption.boundingBoxOnly] = true
+        hitTestOptions[SCNHitTestOption.searchMode] = SCNHitTestSearchMode.all.rawValue
         var hitTestResults = [SCNHitTestResult]()
         hitTestResults.append(contentsOf: sceneView.hitTest(loc1, options: hitTestOptions))
         hitTestResults.append(contentsOf: sceneView.hitTest(loc2, options: hitTestOptions))

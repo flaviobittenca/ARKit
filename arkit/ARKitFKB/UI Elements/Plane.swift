@@ -14,7 +14,7 @@ class Plane: SCNNode {
     
     var anchor: ARPlaneAnchor
     var focusSquare: FocusSquare?
-    var planeGeometry: SCNPlane?
+    var groundPlane: SCNPlane?
     var groundVisible: Bool = false
     // MARK: - Initialization
     
@@ -41,11 +41,9 @@ class Plane: SCNNode {
     }
     
     func initGroundPlane() {
-        planeGeometry = SCNPlane(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z))
-        // Instead of just visualizing the grid as a gray plane, we will render
-        // it in some Tron style colours.
+        groundPlane = SCNPlane(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z))
         let material = SCNMaterial()
-        material.diffuse.contents = #imageLiteral(resourceName: "oakfloor2-albedo.png") // #imageLiteral(resourceName: "tronPlane")
+        material.diffuse.contents = #imageLiteral(resourceName: "oakfloor2-albedo.png")
         material.roughness.contents = #imageLiteral(resourceName: "oakfloor2-roughness.png")
         material.normal.contents = #imageLiteral(resourceName: "oakfloor2-normal.png")
         material.diffuse.wrapS = .repeat
@@ -57,8 +55,8 @@ class Plane: SCNNode {
         material.normal.wrapS = .repeat
         material.normal.wrapT = .repeat
         
-        planeGeometry?.materials = [material]
-        let planeNode = SCNNode(geometry: planeGeometry)
+        groundPlane?.materials = [material]
+        let planeNode = SCNNode(geometry: groundPlane)
         planeNode.position = SCNVector3Make(anchor.center.x, 0, anchor.center.z)
         // Planes in SceneKit are vertical by default so we need to rotate 90degrees to match
         // planes in ARKit
@@ -68,21 +66,21 @@ class Plane: SCNNode {
     }
     
     func setGroundMaterial() {
-        planeGeometry?.materials.removeAll()
+        groundPlane?.materials.removeAll()
         let material = SCNMaterial()
         material.diffuse.contents = #imageLiteral(resourceName: "granitesmooth-albedo")
         material.roughness.contents = #imageLiteral(resourceName: "granitesmooth-roughness")
         material.normal.contents = #imageLiteral(resourceName: "granitesmooth-normal")
         material.metalness.contents = #imageLiteral(resourceName: "granitesmooth-metal")
-        planeGeometry?.materials = [material]
+        groundPlane?.materials = [material]
     }
     
     func updateGroundPlane() {
         // As the user moves around the extend and location of the plane
         // may be updated. We need to update our 3D geometry to match the
         // new parameters of the plane.
-        planeGeometry?.width = CGFloat(anchor.extent.x)
-        planeGeometry?.height = CGFloat(anchor.extent.z)
+        groundPlane?.width = CGFloat(anchor.extent.x)
+        groundPlane?.height = CGFloat(anchor.extent.z)
         // When the plane is first created it's center is 0,0,0 and the nodes
         // transform contains the translation parameters. As the plane is updated
         // the planes translation remains the same but it's center is updated so

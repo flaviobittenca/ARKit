@@ -34,6 +34,8 @@ class SingleFingerGesture: Gesture {
         
         var hitTestOptions = [SCNHitTestOption: Any]()
         hitTestOptions[SCNHitTestOption.boundingBoxOnly] = true
+        hitTestOptions[SCNHitTestOption.ignoreHiddenNodes] = true
+        hitTestOptions[SCNHitTestOption.searchMode] = SCNHitTestSearchMode.all.rawValue
         let results: [SCNHitTestResult] = sceneView.hitTest(initialTouchLocation, options: hitTestOptions)
         for result in results {
             let object = VirtualObject.isNodePartOfVirtualObject(result.node)
