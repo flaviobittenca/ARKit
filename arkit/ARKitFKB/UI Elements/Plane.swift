@@ -108,7 +108,7 @@ extension Plane {
         }
         
         if node.parent != nil {
-            return isNodePartOfVirtualObject(node.parent!)
+            return isNodePartOfPlane(node.parent!)
         }
         
         return nil

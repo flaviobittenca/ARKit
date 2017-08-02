@@ -227,8 +227,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     // MARK: - Gesture Recognizers
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-		virtualObjectManager.reactToTouchesBegan(touches, with: event, in: self.sceneView)
-        
+		
         let touch = touches[touches.index(touches.startIndex, offsetBy: 0)]
         let touchLocation = touch.location(in: sceneView)
         
@@ -236,9 +235,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         hitTestOptions[SCNHitTestOption.boundingBoxOnly] = false
         let results: [SCNHitTestResult] = sceneView.hitTest(touchLocation, options: hitTestOptions)
         for result in results {
-            let object = Plane.isNodePartOfPlane(result.node)
-            if object != nil {
-               object?.setGroundMaterial()
+            if let object = Plane.isNodePartOfPlane(result.node) {
+                object.setGroundMaterial()
+            } else if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
+                virtualObjectManager.reactToTouchesBegan(touches, with: event, in: self.sceneView)
             }
         }
 	}
@@ -249,7 +249,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		if virtualObjectManager.virtualObjects.isEmpty {
-			//chooseObject(addObjectButton)
 			return
 		}
 		virtualObjectManager.reactToTouchesEnded(touches, with: event)
