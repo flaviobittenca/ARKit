@@ -37,8 +37,8 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             self.textManager.showMessage("STARTING A NEW SESSION")
             
             self.virtualObjectManager.removeAllVirtualObjects()
-            self.addObjectButton.setImage(#imageLiteral(resourceName: "add"), for: [])
-            self.addObjectButton.setImage(#imageLiteral(resourceName: "addPressed"), for: [.highlighted])
+            //self.addObjectButton.setImage(#imageLiteral(resourceName: "add"), for: [])
+            //self.addObjectButton.setImage(#imageLiteral(resourceName: "addPressed"), for: [.highlighted])
             self.focusSquare?.isHidden = true
             
             self.resetTracking()

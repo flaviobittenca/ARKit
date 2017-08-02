@@ -18,7 +18,7 @@ extension ViewController: VirtualObjectSelectionViewControllerDelegate, VirtualO
             self.spinner = UIActivityIndicatorView()
             self.spinner!.center = self.addObjectButton.center
             self.spinner!.bounds.size = CGSize(width: self.addObjectButton.bounds.width - 5, height: self.addObjectButton.bounds.height - 5)
-            self.addObjectButton.setImage(#imageLiteral(resourceName: "buttonring"), for: [])
+            //self.addObjectButton.setImage(#imageLiteral(resourceName: "buttonring"), for: [])
             self.sceneView.addSubview(self.spinner!)
             self.spinner!.startAnimating()
             
@@ -32,8 +32,8 @@ extension ViewController: VirtualObjectSelectionViewControllerDelegate, VirtualO
             
             // Remove progress indicator
             self.spinner?.removeFromSuperview()
-            self.addObjectButton.setImage(#imageLiteral(resourceName: "add"), for: [])
-            self.addObjectButton.setImage(#imageLiteral(resourceName: "addPressed"), for: [.highlighted])
+            //self.addObjectButton.setImage(#imageLiteral(resourceName: "add"), for: [])
+            //self.addObjectButton.setImage(#imageLiteral(resourceName: "addPressed"), for: [.highlighted])
         }
     }
     

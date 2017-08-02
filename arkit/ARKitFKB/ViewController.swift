@@ -267,7 +267,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let results = objectsResults(for: touches)
         for result in results {
             if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
-                
                 if virtualObjectManager.virtualObjects.isEmpty {
                     return
                 }
@@ -284,7 +283,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         for result in results {
             if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
                 
-                virtualObjectManager.reactToTouchesCancelled(touches, with: event)
+                 virtualObjectManager.reactToTouchesCancelled(touches, with: event)
                 break
             }
         }
@@ -296,7 +295,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	var planes = [ARPlaneAnchor: Plane]()
 	
     func askToInsertGround(node: SCNNode, anchor: ARPlaneAnchor) {
-        let actionSheetController: UIAlertController = UIAlertController(title: "Plane detected", message: "Would you like to add a ground texture?", preferredStyle: .actionSheet)
+        let actionSheetController: UIAlertController = UIAlertController(title: "Plane detected", message: "Would you like to add a floor?", preferredStyle: .actionSheet)
         let yesAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             self.addPlane(node: node, anchor: anchor, ground: true)
         }
@@ -305,8 +304,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
         actionSheetController.addAction(yesAction)
         actionSheetController.addAction(noAction)
-        actionSheetController.popoverPresentationController?.sourceView = self.view
-        actionSheetController.popoverPresentationController?.sourceRect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+        actionSheetController.popoverPresentationController?.sourceView = self.addObjectButton
+        actionSheetController.popoverPresentationController?.sourceRect = self.addObjectButton.bounds
         
         self.present(actionSheetController, animated: true, completion: nil)
     }
