@@ -23,7 +23,7 @@ class Plane: SCNNode {
         super.init()
         self.groundVisible = ground
         if groundVisible {
-            setGroundPlane()
+            initGroundPlane()
         }
     }
     
@@ -40,7 +40,7 @@ class Plane: SCNNode {
         }
     }
     
-    func setGroundPlane() {
+    func initGroundPlane() {
         planeGeometry = SCNPlane(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z))
         // Instead of just visualizing the grid as a gray plane, we will render
         // it in some Tron style colours.
@@ -63,8 +63,18 @@ class Plane: SCNNode {
         // Planes in SceneKit are vertical by default so we need to rotate 90degrees to match
         // planes in ARKit
         planeNode.transform = SCNMatrix4MakeRotation(-.pi / 2.0, 1.0, 0.0, 0.0)
-        setTextureScale()
+        //setTextureScale()
         addChildNode(planeNode)
+    }
+    
+    func setGroundMaterial() {
+        planeGeometry?.materials.removeAll()
+        let material = SCNMaterial()
+        material.diffuse.contents = #imageLiteral(resourceName: "granitesmooth-albedo")
+        material.roughness.contents = #imageLiteral(resourceName: "granitesmooth-roughness")
+        material.normal.contents = #imageLiteral(resourceName: "granitesmooth-normal")
+        material.metalness.contents = #imageLiteral(resourceName: "granitesmooth-metal")
+        planeGeometry?.materials = [material]
     }
     
     func updateGroundPlane() {
@@ -81,11 +91,27 @@ class Plane: SCNNode {
         //setTextureScale()
     }
     
-    func setTextureScale() {
-        let material: SCNMaterial? = planeGeometry?.materials.first
-        material?.diffuse.contentsTransform = SCNMatrix4MakeScale(Float(planeGeometry!.width), Float(planeGeometry!.height), 1)
-        material?.diffuse.wrapS = .repeat
-        material?.diffuse.wrapT = .repeat
-    }
+//    func setTextureScale() {
+//        let material: SCNMaterial? = planeGeometry?.materials.first
+//        material?.diffuse.contentsTransform = SCNMatrix4MakeScale(Float(planeGeometry!.width), Float(planeGeometry!.height), 1)
+//        material?.diffuse.wrapS = .repeat
+//        material?.diffuse.wrapT = .repeat
+//    }
 }
 
+
+extension Plane {
+    
+    static func isNodePartOfPlane(_ node: SCNNode) -> Plane? {
+        if let planeRoot = node as? Plane {
+            return planeRoot
+        }
+        
+        if node.parent != nil {
+            return isNodePartOfVirtualObject(node.parent!)
+        }
+        
+        return nil
+    }
+    
+}

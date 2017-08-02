@@ -228,6 +228,19 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		virtualObjectManager.reactToTouchesBegan(touches, with: event, in: self.sceneView)
+        
+        let touch = touches[touches.index(touches.startIndex, offsetBy: 0)]
+        let touchLocation = touch.location(in: sceneView)
+        
+        var hitTestOptions = [SCNHitTestOption: Any]()
+        hitTestOptions[SCNHitTestOption.boundingBoxOnly] = false
+        let results: [SCNHitTestResult] = sceneView.hitTest(touchLocation, options: hitTestOptions)
+        for result in results {
+            let object = Plane.isNodePartOfPlane(result.node)
+            if object != nil {
+               object?.setGroundMaterial()
+            }
+        }
 	}
 	
 	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -236,7 +249,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 		if virtualObjectManager.virtualObjects.isEmpty {
-			chooseObject(addObjectButton)
+			//chooseObject(addObjectButton)
 			return
 		}
 		virtualObjectManager.reactToTouchesEnded(touches, with: event)
@@ -255,11 +268,14 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         let yesAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
             self.addPlane(node: node, anchor: anchor, ground: true)
         }
-        let noAction: UIAlertAction = UIAlertAction(title: "No", style: .cancel) { action -> Void in
+        let noAction: UIAlertAction = UIAlertAction(title: "No", style: .default) { action -> Void in
             self.addPlane(node: node, anchor: anchor, ground: false)
         }
         actionSheetController.addAction(yesAction)
         actionSheetController.addAction(noAction)
+        actionSheetController.popoverPresentationController?.sourceView = self.view
+        actionSheetController.popoverPresentationController?.sourceRect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+        
         self.present(actionSheetController, animated: true, completion: nil)
     }
     
