@@ -18,12 +18,11 @@ protocol VirtualObjectSelectionDelegate: class {
 
 class ObjectsCollectionView: UIView {
     
-    let reuseIdentifier = "objectsCell"
     private var selectedVirtualObjectRows = IndexSet()
     weak var delegate: VirtualObjectSelectionDelegate?
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var objects: [VirtualObjectDefinition] = [] {
+    var objects: [VirtualElementDefinition] = [] {
         didSet {
             collectionView.reloadData()
         }
@@ -36,7 +35,8 @@ class ObjectsCollectionView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        //collectionView.register(ObjectCollectionCell.self, forCellWithReuseIdentifier: ObjectCollectionCell.reuseIdentifier)
+        collectionView.register(UINib.init(nibName: "ObjectCollectionCell", bundle: nil), forCellWithReuseIdentifier: ObjectCollectionCell.reuseIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
         
@@ -52,11 +52,6 @@ extension ObjectsCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         delegate?.virtualObjectSelectionDelegate(self, didSelectObjectAt: indexPath.row)
-//        if selectedVirtualObjectRows.contains(indexPath.row) {
-//            delegate?.virtualObjectSelectionDelegate(self, didDeselectObjectAt: indexPath.row)
-//        } else {
-//            
-//        }
     }
 }
 
@@ -67,11 +62,11 @@ extension ObjectsCollectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ObjectCollectionCell.reuseIdentifier, for: indexPath) as! ObjectCollectionCell
         cell.backgroundColor = .red
         
-        let object = objects[indexPath.row]
-        //cell.title = object.displayName
+        var object = objects[indexPath.row]
+        cell.objectImageView.image = object.thumbImage
         
         return cell
     }

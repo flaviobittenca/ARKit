@@ -29,6 +29,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         
         guard restartExperienceButtonIsEnabled, !isLoadingObject else { return }
         
+        self.lastSelectedFloorName = nil
         self.objectsHeightConstraint.constant = 0.0
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()

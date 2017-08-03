@@ -25,7 +25,7 @@ class ObjectCell: UITableViewCell {
             if let category = element as? VirtualCategoryDefinition {
                 objectTitleLabel.text = category.category
                 objectImageView.image = UIImage()
-            } else if let object = element as? VirtualObjectDefinition {
+            } else if let object = element as? VirtualElementDefinition {
                 objectTitleLabel.text = object.displayName
                 objectImageView.image = UIImage()
             }
@@ -43,7 +43,7 @@ class VirtualCategorySelectionViewController: UITableViewController {
     weak var delegate: VirtualCategorySelectionDelegate?
     private var elements: [Any] {
         get {
-            return VirtualObjectManager.availableCategories
+            return VirtualElementManager.availableCategories
         }
     }
     
@@ -76,10 +76,8 @@ class VirtualCategorySelectionViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: ObjectCell.reuseIdentifier, for: indexPath) as? ObjectCell else {
             fatalError("Expected `ObjectCell` type for reuseIdentifier \(ObjectCell.reuseIdentifier). Check the configuration in Main.storyboard.")
         }
-        
         cell.element = elements[indexPath.row]
         
-
         return cell
     }
     

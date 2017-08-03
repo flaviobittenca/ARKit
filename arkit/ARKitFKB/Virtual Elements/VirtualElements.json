@@ -1,0 +1,102 @@
+[
+ {"category": "Apple Default",
+ "objects": [{
+             "modelName": "candle",
+             "displayName": "Candle",
+             "particleScaleInfo": {"flame": 0.018 },
+             "elementType": 0
+             },
+             {
+             "modelName": "cup",
+             "displayName": "Cup",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             {
+             "modelName": "vase",
+             "displayName": "Vase",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             {
+             "modelName": "lamp",
+             "displayName": "Lamp",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             {
+             "modelName": "candle",
+             "displayName": "Candle",
+             "particleScaleInfo": {"flame": 0.018 },
+             "elementType": 0
+             },
+             {
+             "modelName": "cup",
+             "displayName": "Cup",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             {
+             "modelName": "vase",
+             "displayName": "Vase",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             {
+             "modelName": "lamp",
+             "displayName": "Lamp",
+             "particleScaleInfo": { },
+             "elementType": 0
+             }
+             ]
+ },
+ {"category": "The Home Depot",
+ "objects": [{
+             "modelName": "decora01",
+             "displayName": "decora01",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             {
+             "modelName": "decora02",
+             "displayName": "decora02",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             {
+             "modelName": "decora03",
+             "displayName": "decora03",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             {
+             "modelName": "decora04",
+             "displayName": "decora04",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             {
+             "modelName": "decora05",
+             "displayName": "decora05",
+             "particleScaleInfo": { },
+             "elementType": 0
+             },
+             ]
+ },
+ {"category": "Floor",
+ "objects": [{
+             "modelName": "oakfloor",
+             "displayName": "Oak",
+             "particleScaleInfo": { },
+             "elementType": 1
+             },
+             {
+             "modelName": "sculptedfloorboards",
+             "displayName": "Sculpted Floor",
+             "particleScaleInfo": { },
+             "elementType": 1
+             },
+             ]
+ }
+ ]
+ 

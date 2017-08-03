@@ -30,7 +30,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     // MARK: - Virtual Object Manipulation Properties
     
     var dragOnInfinitePlanesEnabled = false
-    var virtualObjectManager: VirtualObjectManager!
+    var virtualObjectManager: VirtualElementManager!
     
     var isLoadingObject: Bool = false {
         didSet {
@@ -46,6 +46,24 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var textManager: TextManager!
     var restartExperienceButtonIsEnabled = true
+    var categorySelected: Int?
+    var lastSelectedFloorName: String? {
+        didSet {
+            guard let _ = lastSelectedFloorName else {
+                return
+            }
+            
+            let actionSheetController: UIAlertController = UIAlertController(title: "Add floor", message: "Tap on a detected plane to add the floor", preferredStyle: .actionSheet)
+            let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
+            }
+            actionSheetController.addAction(okAction)
+            
+            actionSheetController.popoverPresentationController?.sourceView = self.addObjectButton
+            actionSheetController.popoverPresentationController?.sourceRect = self.addObjectButton.bounds
+            
+            self.present(actionSheetController, animated: true, completion: nil)
+        }
+    }
     
     // MARK: - UI Elements
     
@@ -59,6 +77,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var restartExperienceButton: UIButton!
     @IBOutlet weak var objectsCollectionView: UIView!
     @IBOutlet weak var objectsHeightConstraint: NSLayoutConstraint!
+    
     var objectsCollectionNibView: ObjectsCollectionView?
     
     // MARK: - Queues
@@ -73,6 +92,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         super.viewDidLoad()
 
         objectsCollectionNibView = ObjectsCollectionView.instanceFromNib() as? ObjectsCollectionView
+        objectsCollectionNibView?.frame.size.width = UIScreen.main.bounds.width
         objectsCollectionNibView?.delegate = self
         objectsCollectionView.addSubview(objectsCollectionNibView!)
         
@@ -106,7 +126,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     // MARK: - Setup
     
 	func setupScene() {
-		virtualObjectManager = VirtualObjectManager()
+		virtualObjectManager = VirtualElementManager()
         virtualObjectManager.delegate = self
 		
 		// set up scene view
@@ -151,7 +171,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
 		if let planeAnchor = anchor as? ARPlaneAnchor {
 			serialQueue.async {
-				self.askToInsertGround(node: node, anchor: planeAnchor)
+				self.addPlane(node: node, anchor: planeAnchor)
 				self.virtualObjectManager.checkIfObjectShouldMoveOntoPlane(anchor: planeAnchor, planeAnchorNode: node)
 			}
 		}
@@ -248,11 +268,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let results = objectsResults(for: touches)
         for result in results {
-            if let object = Plane.isNodePartOfPlane(result.node) {
-                object.setGroundMaterial()
+            if let plane = Plane.isNodePartOfPlane(result.node) {
+                plane.setFloorMaterial(with: self.lastSelectedFloorName)
                 break
-            } else if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
-                print("touch on virtual object")
+            } else if let _ = VirtualElement.isNodePartOfVirtualObject(result.node) {
                 virtualObjectManager.reactToTouchesBegan(touches, with: event, in: self.sceneView)
                 break
             }
@@ -262,7 +281,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let results = objectsResults(for: touches)
         for result in results {
-            if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
+            if let _ = VirtualElement.isNodePartOfVirtualObject(result.node) {
                virtualObjectManager.reactToTouchesMoved(touches, with: event)
                 break
             }
@@ -273,7 +292,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let results = objectsResults(for: touches)
         for result in results {
-            if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
+            if let _ = VirtualElement.isNodePartOfVirtualObject(result.node) {
                 if virtualObjectManager.virtualObjects.isEmpty {
                     return
                 }
@@ -288,7 +307,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         let results = objectsResults(for: touches)
         for result in results {
-            if let _ = VirtualObject.isNodePartOfVirtualObject(result.node) {
+            if let _ = VirtualElement.isNodePartOfVirtualObject(result.node) {
                 
                  virtualObjectManager.reactToTouchesCancelled(touches, with: event)
                 break
@@ -301,25 +320,25 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	
 	var planes = [ARPlaneAnchor: Plane]()
 	
-    func askToInsertGround(node: SCNNode, anchor: ARPlaneAnchor) {
-        let actionSheetController: UIAlertController = UIAlertController(title: "Plane detected", message: "Would you like to add a floor?", preferredStyle: .actionSheet)
-        let yesAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
-            self.addPlane(node: node, anchor: anchor, ground: true)
-        }
-        let noAction: UIAlertAction = UIAlertAction(title: "No", style: .default) { action -> Void in
-            self.addPlane(node: node, anchor: anchor, ground: false)
-        }
-        actionSheetController.addAction(yesAction)
-        actionSheetController.addAction(noAction)
-        actionSheetController.popoverPresentationController?.sourceView = self.addObjectButton
-        actionSheetController.popoverPresentationController?.sourceRect = self.addObjectButton.bounds
-        
-        self.present(actionSheetController, animated: true, completion: nil)
-    }
+//    func askToInsertFloor(plane: Plane) {
+//        let actionSheetController: UIAlertController = UIAlertController(title: "Add floor", message: "Would you like to add a floor?", preferredStyle: .actionSheet)
+//        let yesAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
+//            plane.setFloorMaterial(with: self.lastSelectedFloorName)
+//        }
+//        let noAction: UIAlertAction = UIAlertAction(title: "No", style: .default) { action -> Void in
+//
+//        }
+//        actionSheetController.addAction(yesAction)
+//        actionSheetController.addAction(noAction)
+//        actionSheetController.popoverPresentationController?.sourceView = self.addObjectButton
+//        actionSheetController.popoverPresentationController?.sourceRect = self.addObjectButton.bounds
+//
+//        self.present(actionSheetController, animated: true, completion: nil)
+//    }
     
-    func addPlane(node: SCNNode, anchor: ARPlaneAnchor, ground: Bool) {
+    func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         
-        let plane = Plane(anchor, ground: ground)
+        let plane = Plane(anchor)
 		planes[anchor] = plane
 		node.addChildNode(plane)
 		

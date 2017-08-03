@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13147.4"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ObjectCollectionCell" id="ODB-aW-NHQ" customClass="ObjectCollectionCell" customModule="ARKitFKB" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fnf-G3-xsF">
+                        <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ha6-ut-KM9">
+                                <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ha6-ut-KM9" firstAttribute="leading" secondItem="Fnf-G3-xsF" secondAttribute="leading" id="3LF-fM-xEY"/>
+                            <constraint firstAttribute="bottom" secondItem="ha6-ut-KM9" secondAttribute="bottom" id="3YO-5m-pzm"/>
+                            <constraint firstAttribute="trailing" secondItem="ha6-ut-KM9" secondAttribute="trailing" id="99U-QY-OkJ"/>
+                            <constraint firstItem="ha6-ut-KM9" firstAttribute="top" secondItem="Fnf-G3-xsF" secondAttribute="top" id="r6c-Ok-Nv5"/>
+                            <constraint firstAttribute="height" constant="140" id="uvv-hc-EZa"/>
+                            <constraint firstAttribute="width" constant="140" id="zAp-lq-KNl"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Fnf-G3-xsF" secondAttribute="bottom" id="0ia-Is-TgT"/>
+                <constraint firstItem="Fnf-G3-xsF" firstAttribute="top" secondItem="ODB-aW-NHQ" secondAttribute="top" id="bFJ-eo-Vkb"/>
+                <constraint firstAttribute="trailing" secondItem="Fnf-G3-xsF" secondAttribute="trailing" id="hqv-uL-TRC"/>
+                <constraint firstItem="Fnf-G3-xsF" firstAttribute="leading" secondItem="ODB-aW-NHQ" secondAttribute="leading" id="iJR-Ac-WqX"/>
+            </constraints>
+            <connections>
+                <outlet property="objectImageView" destination="ha6-ut-KM9" id="3l3-eG-1mj"/>
+            </connections>
+            <point key="canvasLocation" x="-36" y="-516"/>
+        </collectionViewCell>
+    </objects>
+</document>

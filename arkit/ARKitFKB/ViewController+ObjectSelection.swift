@@ -1,9 +1,9 @@
 /*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Methods on the main view controller for handling virtual object loading and movement
-*/
+ See LICENSE folder for this sample’s licensing information.
+ 
+ Abstract:
+ Methods on the main view controller for handling virtual object loading and movement
+ */
 
 import UIKit
 import SceneKit
@@ -12,7 +12,7 @@ extension ViewController: VirtualCategorySelectionDelegate, VirtualObjectSelecti
     
     // MARK: - VirtualObjectManager delegate callbacks
     
-    func virtualObjectManager(_ manager: VirtualObjectManager, willLoad object: VirtualObject) {
+    func virtualObjectManager(_ manager: VirtualElementManager, willLoad object: VirtualElement) {
         DispatchQueue.main.async {
             // Show progress indicator
             self.spinner = UIActivityIndicatorView()
@@ -25,7 +25,7 @@ extension ViewController: VirtualCategorySelectionDelegate, VirtualObjectSelecti
         }
     }
     
-    func virtualObjectManager(_ manager: VirtualObjectManager, didLoad object: VirtualObject) {
+    func virtualObjectManager(_ manager: VirtualElementManager, didLoad object: VirtualElement) {
         DispatchQueue.main.async {
             self.isLoadingObject = false
             
@@ -34,27 +34,31 @@ extension ViewController: VirtualCategorySelectionDelegate, VirtualObjectSelecti
         }
     }
     
-    func virtualObjectManager(_ manager: VirtualObjectManager, couldNotPlace object: VirtualObject) {
+    func virtualObjectManager(_ manager: VirtualElementManager, couldNotPlace object: VirtualElement) {
         textManager.showMessage("CANNOT PLACE OBJECT\nTry moving left or right.")
     }
     
     // MARK: - VirtualObjectSelectionDelegate
-
+    
     func virtualObjectSelectionDelegate(_: ObjectsCollectionView, didSelectObjectAt index: Int) {
         guard let cameraTransform = session.currentFrame?.camera.transform else {
             return
         }
         
-        let definition = VirtualObjectManager.availableObjects[index]
-        let object = VirtualObject(definition: definition)
-        let position = focusSquare?.lastPosition ?? float3(0)
-        virtualObjectManager.loadVirtualObject(object, to: position, cameraTransform: cameraTransform)
-        if object.parent == nil {
-            serialQueue.async {
-                self.sceneView.scene.rootNode.addChildNode(object)
+        let definition = VirtualElementManager.availableObjects(for: categorySelected!)[index]
+        //if definition
+        if definition.elementType == VirtualElementType.object.rawValue {
+            let object = VirtualElement(definition: definition)
+            let position = focusSquare?.lastPosition ?? float3(0)
+            virtualObjectManager.loadVirtualObject(object, to: position, cameraTransform: cameraTransform)
+            if object.parent == nil {
+                serialQueue.async {
+                    self.sceneView.scene.rootNode.addChildNode(object)
+                }
             }
+        } else {
+            lastSelectedFloorName = definition.modelName
         }
-        
         self.objectsHeightConstraint.constant = 0.0
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
@@ -62,17 +66,34 @@ extension ViewController: VirtualCategorySelectionDelegate, VirtualObjectSelecti
     }
     
     func virtualObjectSelectionDelegate(_: ObjectsCollectionView, didDeselectObjectAt index: Int) {
-        virtualObjectManager.removeVirtualObject(at: index)
+        virtualObjectManager.removeVirtualObject(at: index, for: categorySelected!)
     }
     
     // MARK: - VirtualCategorySelectionDelegate
     
     func virtualCategorySelectionDelegate(_: VirtualCategorySelectionViewController, didSelectCategoryAt index: Int) {
-        objectsCollectionNibView?.objects = VirtualObjectManager.availableCategories[index].objects
+        categorySelected = index
+        objectsCollectionNibView?.objects = VirtualElementManager.availableCategories[index].objects
         
         self.objectsHeightConstraint.constant = 140.0
         UIView.animate(withDuration: 0.5) {
             self.view.layoutIfNeeded()
         }
     }
+}
+
+extension ViewController {
+    
+    func presentFloorPlanes() {
+        let category = VirtualElementManager.availableCategories.filter {
+            $0.category == "Floor"
+            }.first
+        objectsCollectionNibView?.objects = category!.objects
+        
+        self.objectsHeightConstraint.constant = 140.0
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
 }
