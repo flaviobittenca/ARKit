@@ -8,7 +8,7 @@ Methods on the main view controller for handling virtual object loading and move
 import UIKit
 import SceneKit
 
-extension ViewController: VirtualObjectSelectionViewControllerDelegate, VirtualObjectManagerDelegate {
+extension ViewController: VirtualCategorySelectionDelegate, VirtualObjectSelectionDelegate, VirtualObjectManagerDelegate {
     
     // MARK: - VirtualObjectManager delegate callbacks
     
@@ -18,7 +18,6 @@ extension ViewController: VirtualObjectSelectionViewControllerDelegate, VirtualO
             self.spinner = UIActivityIndicatorView()
             self.spinner!.center = self.addObjectButton.center
             self.spinner!.bounds.size = CGSize(width: self.addObjectButton.bounds.width - 5, height: self.addObjectButton.bounds.height - 5)
-            //self.addObjectButton.setImage(#imageLiteral(resourceName: "buttonring"), for: [])
             self.sceneView.addSubview(self.spinner!)
             self.spinner!.startAnimating()
             
@@ -32,8 +31,6 @@ extension ViewController: VirtualObjectSelectionViewControllerDelegate, VirtualO
             
             // Remove progress indicator
             self.spinner?.removeFromSuperview()
-            //self.addObjectButton.setImage(#imageLiteral(resourceName: "add"), for: [])
-            //self.addObjectButton.setImage(#imageLiteral(resourceName: "addPressed"), for: [.highlighted])
         }
     }
     
@@ -41,9 +38,9 @@ extension ViewController: VirtualObjectSelectionViewControllerDelegate, VirtualO
         textManager.showMessage("CANNOT PLACE OBJECT\nTry moving left or right.")
     }
     
-    // MARK: - VirtualObjectSelectionViewControllerDelegate
-    
-    func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, didSelectObjectAt index: Int) {
+    // MARK: - VirtualObjectSelectionDelegate
+
+    func virtualObjectSelectionDelegate(_: ObjectsCollectionView, didSelectObjectAt index: Int) {
         guard let cameraTransform = session.currentFrame?.camera.transform else {
             return
         }
@@ -57,10 +54,25 @@ extension ViewController: VirtualObjectSelectionViewControllerDelegate, VirtualO
                 self.sceneView.scene.rootNode.addChildNode(object)
             }
         }
+        
+        self.objectsHeightConstraint.constant = 0.0
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
     }
     
-    func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, didDeselectObjectAt index: Int) {
+    func virtualObjectSelectionDelegate(_: ObjectsCollectionView, didDeselectObjectAt index: Int) {
         virtualObjectManager.removeVirtualObject(at: index)
     }
     
+    // MARK: - VirtualCategorySelectionDelegate
+    
+    func virtualCategorySelectionDelegate(_: VirtualCategorySelectionViewController, didSelectCategoryAt index: Int) {
+        objectsCollectionNibView?.objects = VirtualObjectManager.availableCategories[index].objects
+        
+        self.objectsHeightConstraint.constant = 140.0
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
+    }
 }

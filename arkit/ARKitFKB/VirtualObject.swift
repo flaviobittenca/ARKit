@@ -9,12 +9,27 @@ import Foundation
 import SceneKit
 import ARKit
 
+struct VirtualCategoryDefinition: Codable, Equatable {
+    let category: String
+    let objects: [VirtualObjectDefinition]
+
+    init(category: String, objects: [VirtualObjectDefinition]) {
+        self.category = category
+        self.objects = objects
+    }
+    
+    static func ==(lhs: VirtualCategoryDefinition, rhs: VirtualCategoryDefinition) -> Bool {
+        return lhs.category == rhs.category
+            && lhs.objects == rhs.objects
+    }
+}
+
 struct VirtualObjectDefinition: Codable, Equatable {
     let modelName: String
     let displayName: String
     let particleScaleInfo: [String: Float]
     
-    lazy var thumbImage: UIImage = UIImage(named:"chair")!
+    //lazy var thumbImage: UIImage = UIImage(named:"chair")!
     
     init(modelName: String, displayName: String, particleScaleInfo: [String: Float] = [:]) {
         self.modelName = modelName

@@ -1,11 +1,15 @@
 /*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Popover view controller for choosing virtual objects to place in the AR scene.
-*/
+ See LICENSE folder for this sample’s licensing information.
+ 
+ Abstract:
+ Popover view controller for choosing virtual objects to place in the AR scene.
+ */
 
 import UIKit
+
+enum PresentationType {
+    case category, object
+}
 
 // MARK: - ObjectCell
 
@@ -15,30 +19,37 @@ class ObjectCell: UITableViewCell {
     
     @IBOutlet weak var objectTitleLabel: UILabel!
     @IBOutlet weak var objectImageView: UIImageView!
-        
-    var object: VirtualObjectDefinition? {
+    
+    var element: Any? {
         didSet {
-            objectTitleLabel.text = object?.displayName
-            objectImageView.image = object?.thumbImage
+            if let category = element as? VirtualCategoryDefinition {
+                objectTitleLabel.text = category.category
+                objectImageView.image = UIImage()
+            } else if let object = element as? VirtualObjectDefinition {
+                objectTitleLabel.text = object.displayName
+                objectImageView.image = UIImage()
+            }
+            
         }
     }
 }
 
-// MARK: - VirtualObjectSelectionViewControllerDelegate
-
-protocol VirtualObjectSelectionViewControllerDelegate: class {
-    func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, didSelectObjectAt index: Int)
-    func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, didDeselectObjectAt index: Int)
+protocol VirtualCategorySelectionDelegate: class {
+    func virtualCategorySelectionDelegate(_: VirtualCategorySelectionViewController, didSelectCategoryAt index: Int)
 }
 
-class VirtualObjectSelectionViewController: UITableViewController {
+class VirtualCategorySelectionViewController: UITableViewController {
 
-    private var selectedVirtualObjectRows = IndexSet()
-    weak var delegate: VirtualObjectSelectionViewControllerDelegate?
+    weak var delegate: VirtualCategorySelectionDelegate?
+    private var elements: [Any] {
+        get {
+            return VirtualObjectManager.availableCategories
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.separatorEffect = UIVibrancyEffect(blurEffect: UIBlurEffect(style: .light))
     }
     
@@ -50,18 +61,15 @@ class VirtualObjectSelectionViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Check if the current row is already selected, then deselect it.
-        if selectedVirtualObjectRows.contains(indexPath.row) {
-            delegate?.virtualObjectSelectionViewController(self, didDeselectObjectAt: indexPath.row)
-        } else {
-            delegate?.virtualObjectSelectionViewController(self, didSelectObjectAt: indexPath.row)
-        }
+        
+        delegate?.virtualCategorySelectionDelegate(self, didSelectCategoryAt: indexPath.row)
         self.dismiss(animated: true, completion: nil)
     }
-        
+    
     // MARK: - UITableViewDataSource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return VirtualObjectManager.availableObjects.count
+        return elements.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,13 +77,9 @@ class VirtualObjectSelectionViewController: UITableViewController {
             fatalError("Expected `ObjectCell` type for reuseIdentifier \(ObjectCell.reuseIdentifier). Check the configuration in Main.storyboard.")
         }
         
-        cell.object = VirtualObjectManager.availableObjects[indexPath.row]
+        cell.element = elements[indexPath.row]
+        
 
-        if selectedVirtualObjectRows.contains(indexPath.row) {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
         return cell
     }
     
@@ -88,5 +92,5 @@ class VirtualObjectSelectionViewController: UITableViewController {
         let cell = tableView.cellForRow(at: indexPath)
         cell?.backgroundColor = UIColor.clear
     }
-
+    
 }

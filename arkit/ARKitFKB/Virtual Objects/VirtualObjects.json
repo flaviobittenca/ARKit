@@ -1,28 +1,34 @@
 [
-    {
-        "modelName": "candle",
-        "displayName": "Candle",
-        "particleScaleInfo": {"flame": 0.018 }
-    },
-    {
-        "modelName": "cup",
-        "displayName": "Cup",
-        "particleScaleInfo": { }
-    },
-    {
-        "modelName": "vase",
-        "displayName": "Vase",
-        "particleScaleInfo": { }
-    },
-    {
-        "modelName": "lamp",
-        "displayName": "Lamp",
-        "particleScaleInfo": { }
-    },
-    {
-        "modelName": "newChair",
-        "displayName": "Chair",
-        "particleScaleInfo": { }
-    },
-]
+ {"category": "Apple Default",
+ "objects": [{
+             "modelName": "candle",
+             "displayName": "Candle",
+             "particleScaleInfo": {"flame": 0.018 }
+             },
+             {
+             "modelName": "cup",
+             "displayName": "Cup",
+             "particleScaleInfo": { }
+             },
+             {
+             "modelName": "vase",
+             "displayName": "Vase",
+             "particleScaleInfo": { }
+             },
+             {
+             "modelName": "lamp",
+             "displayName": "Lamp",
+             "particleScaleInfo": { }
+             },
+             ]
+ },
+ {"category": "Custom",
+ "objects": [{
+             "modelName": "newChair",
+             "displayName": "Chair",
+             "particleScaleInfo": { }
+             },
+             ]
+ }
+ ]
  

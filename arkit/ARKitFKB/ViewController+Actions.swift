@@ -29,6 +29,11 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         
         guard restartExperienceButtonIsEnabled, !isLoadingObject else { return }
         
+        self.objectsHeightConstraint.constant = 0.0
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
+        
         DispatchQueue.main.async {
             self.restartExperienceButtonIsEnabled = false
             
@@ -37,8 +42,6 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
             self.textManager.showMessage("STARTING A NEW SESSION")
             
             self.virtualObjectManager.removeAllVirtualObjects()
-            //self.addObjectButton.setImage(#imageLiteral(resourceName: "add"), for: [])
-            //self.addObjectButton.setImage(#imageLiteral(resourceName: "addPressed"), for: [.highlighted])
             self.focusSquare?.isHidden = true
             
             self.resetTracking()
@@ -72,7 +75,7 @@ extension ViewController: UIPopoverPresentationControllerDelegate {
         }
         
         guard let identifier = segue.identifier, let segueIdentifer = SegueIdentifier(rawValue: identifier) else { return }
-        if segueIdentifer == .showObjects, let objectsViewController = segue.destination as? VirtualObjectSelectionViewController {
+        if segueIdentifer == .showObjects, let objectsViewController = segue.destination as? VirtualCategorySelectionViewController {
             objectsViewController.delegate = self
         }
     }

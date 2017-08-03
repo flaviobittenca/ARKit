@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1137ED1F1F09BE0800F1A96E /* VirtualObjects.json in Resources */ = {isa = PBXBuildFile; fileRef = 1137ED1E1F09BE0800F1A96E /* VirtualObjects.json */; };
 		11BD822A1F09D750003F11C8 /* ViewController+ObjectSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147D76491EFC36070000FEBF /* ViewController+ObjectSelection.swift */; };
-		147062641F06FA790003EE03 /* VirtualObjectSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147062631F06FA790003EE03 /* VirtualObjectSelectionViewController.swift */; };
+		147062641F06FA790003EE03 /* VirtualCategorySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147062631F06FA790003EE03 /* VirtualCategorySelectionViewController.swift */; };
 		1488323F1EFC378A0043E0AB /* ViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1488323E1EFC378A0043E0AB /* ViewController+Actions.swift */; };
 		148832411EFC3B250043E0AB /* FocusSquareSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148832401EFC3B250043E0AB /* FocusSquareSegment.swift */; };
 		148832431EFC3BE00043E0AB /* SingleFingerGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148832421EFC3BE00043E0AB /* SingleFingerGesture.swift */; };
@@ -25,6 +25,8 @@
 		39C0B9591E9C6B1F003FCA0C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C0B9571E9C6B1F003FCA0C /* SettingsViewController.swift */; };
 		39C0B95A1E9C6B1F003FCA0C /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C0B9581E9C6B1F003FCA0C /* Utilities.swift */; };
 		39D8DC1B1E8ADAE600386B05 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39D8DC1A1E8ADAE600386B05 /* LaunchScreen.storyboard */; };
+		8861DA301F33589B00213322 /* ObjectsCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8861DA2F1F33589B00213322 /* ObjectsCollectionView.xib */; };
+		8861DA321F3359D800213322 /* ObjectsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8861DA311F3359D800213322 /* ObjectsCollectionView.swift */; };
 		C41366B91EB80DD400EC054A /* TextManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41366B81EB80DD400EC054A /* TextManager.swift */; };
 		C42A71BD1E9C0AF200944367 /* FocusSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42A71BC1E9C0AF200944367 /* FocusSquare.swift */; };
 		C46356671EF9CC500080C8D9 /* SceneExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46356661EF9CC480080C8D9 /* SceneExtensions.swift */; };
@@ -35,7 +37,7 @@
 /* Begin PBXFileReference section */
 		11063F3B1EBE651B0033EE6D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		1137ED1E1F09BE0800F1A96E /* VirtualObjects.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = VirtualObjects.json; sourceTree = "<group>"; };
-		147062631F06FA790003EE03 /* VirtualObjectSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectSelectionViewController.swift; sourceTree = "<group>"; };
+		147062631F06FA790003EE03 /* VirtualCategorySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualCategorySelectionViewController.swift; sourceTree = "<group>"; };
 		147D76491EFC36070000FEBF /* ViewController+ObjectSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+ObjectSelection.swift"; sourceTree = "<group>"; };
 		1488323E1EFC378A0043E0AB /* ViewController+Actions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Actions.swift"; sourceTree = "<group>"; };
 		148832401EFC3B250043E0AB /* FocusSquareSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSquareSegment.swift; sourceTree = "<group>"; };
@@ -54,6 +56,8 @@
 		39C0B9571E9C6B1F003FCA0C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		39C0B9581E9C6B1F003FCA0C /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		39D8DC1A1E8ADAE600386B05 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8861DA2F1F33589B00213322 /* ObjectsCollectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectsCollectionView.xib; sourceTree = "<group>"; };
+		8861DA311F3359D800213322 /* ObjectsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsCollectionView.swift; sourceTree = "<group>"; };
 		C07A477172D99C90CD79D3A6 /* SampleCode.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		C41366B81EB80DD400EC054A /* TextManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextManager.swift; sourceTree = "<group>"; };
 		C42A71BC1E9C0AF200944367 /* FocusSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
@@ -118,7 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				39C0B9571E9C6B1F003FCA0C /* SettingsViewController.swift */,
-				147062631F06FA790003EE03 /* VirtualObjectSelectionViewController.swift */,
+				147062631F06FA790003EE03 /* VirtualCategorySelectionViewController.swift */,
 			);
 			path = "Additional View Controllers";
 			sourceTree = "<group>";
@@ -169,6 +173,7 @@
 				3929C48D1E89EC2C00E00B60 /* ViewController.swift */,
 				1488323E1EFC378A0043E0AB /* ViewController+Actions.swift */,
 				147D76491EFC36070000FEBF /* ViewController+ObjectSelection.swift */,
+				8861DA2E1F33584000213322 /* CollectionView */,
 				C40DF57B1EC2330700D9D59E /* Virtual Objects */,
 				113B64D01ECA81CA0071CBD1 /* UI Elements */,
 				1488324B1EFC3EBF0043E0AB /* Additional View Controllers */,
@@ -184,6 +189,15 @@
 				E605C5746C0A772D22D8A257 /* LICENSE.txt */,
 			);
 			path = LICENSE;
+			sourceTree = "<group>";
+		};
+		8861DA2E1F33584000213322 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				8861DA2F1F33589B00213322 /* ObjectsCollectionView.xib */,
+				8861DA311F3359D800213322 /* ObjectsCollectionView.swift */,
+			);
+			path = CollectionView;
 			sourceTree = "<group>";
 		};
 		C40DF57B1EC2330700D9D59E /* Virtual Objects */ = {
@@ -262,6 +276,7 @@
 				39D8DC1B1E8ADAE600386B05 /* LaunchScreen.storyboard in Resources */,
 				3929C4931E89EC2C00E00B60 /* Assets.xcassets in Resources */,
 				3929C4911E89EC2C00E00B60 /* Main.storyboard in Resources */,
+				8861DA301F33589B00213322 /* ObjectsCollectionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,11 +288,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				11BD822A1F09D750003F11C8 /* ViewController+ObjectSelection.swift in Sources */,
+				8861DA321F3359D800213322 /* ObjectsCollectionView.swift in Sources */,
 				1488323F1EFC378A0043E0AB /* ViewController+Actions.swift in Sources */,
 				3929C48E1E89EC2C00E00B60 /* ViewController.swift in Sources */,
 				C41366B91EB80DD400EC054A /* TextManager.swift in Sources */,
 				39C0B95A1E9C6B1F003FCA0C /* Utilities.swift in Sources */,
-				147062641F06FA790003EE03 /* VirtualObjectSelectionViewController.swift in Sources */,
+				147062641F06FA790003EE03 /* VirtualCategorySelectionViewController.swift in Sources */,
 				392BB82C1EA19A7C00FBBAC8 /* Plane.swift in Sources */,
 				148832451EFC3C160043E0AB /* TwoFingerGesture.swift in Sources */,
 				3987BEDC1E9E057F00167FAC /* Gesture.swift in Sources */,

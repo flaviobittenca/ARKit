@@ -57,6 +57,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var settingsButton: UIButton!
     @IBOutlet weak var addObjectButton: UIButton!
     @IBOutlet weak var restartExperienceButton: UIButton!
+    @IBOutlet weak var objectsCollectionView: UIView!
+    @IBOutlet weak var objectsHeightConstraint: NSLayoutConstraint!
+    var objectsCollectionNibView: ObjectsCollectionView?
     
     // MARK: - Queues
     
@@ -69,6 +72,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        objectsCollectionNibView = ObjectsCollectionView.instanceFromNib() as? ObjectsCollectionView
+        objectsCollectionNibView?.delegate = self
+        objectsCollectionView.addSubview(objectsCollectionNibView!)
+        
         Setting.registerDefaults()
 		setupUIControls()
         setupScene()
