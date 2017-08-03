@@ -52,6 +52,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             guard let _ = lastSelectedFloorName else {
                 return
             }
+            if presentedAddFloorActionSheet {
+                return
+            }
+            presentedAddFloorActionSheet = true
             
             let actionSheetController: UIAlertController = UIAlertController(title: "Add floor", message: "Tap on a detected plane to add the floor", preferredStyle: .actionSheet)
             let okAction: UIAlertAction = UIAlertAction(title: "Ok", style: .default) { action -> Void in
@@ -64,6 +68,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             self.present(actionSheetController, animated: true, completion: nil)
         }
     }
+    var presentedAddFloorActionSheet: Bool = false
     
     // MARK: - UI Elements
     
