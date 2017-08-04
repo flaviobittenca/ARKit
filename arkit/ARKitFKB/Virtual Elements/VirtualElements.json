@@ -96,6 +96,30 @@
              "particleScaleInfo": { },
              "elementType": 1
              },
+             {
+             "modelName": "old-textured-fabric",
+             "displayName": "Old textured Floor",
+             "particleScaleInfo": { },
+             "elementType": 1
+             },
+             {
+             "modelName": "rustediron-streaks",
+             "displayName": "Rustediron Floor",
+             "particleScaleInfo": { },
+             "elementType": 1
+             },
+             {
+             "modelName": "granitesmooth",
+             "displayName": "Granite Smooth Floor",
+             "particleScaleInfo": { },
+             "elementType": 1
+             },
+             {
+             "modelName": "carvedlimestoneground",
+             "displayName": "Carved limes Floor",
+             "particleScaleInfo": { },
+             "elementType": 1
+             },
              ]
  }
  ]

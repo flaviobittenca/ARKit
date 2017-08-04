@@ -3,49 +3,49 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "ARKit-40.png",
+      "filename" : "Icon-Spotlight-41.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "ARKit-60.png",
+      "filename" : "Icon-60.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "ARKit-59.png",
+      "filename" : "Icon-Small@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "ARKit-87.png",
+      "filename" : "Icon-Small@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "ARKit-81.png",
+      "filename" : "Icon-Spotlight-40@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "ARKit-121.png",
+      "filename" : "Icon-Spotlight-40@3x.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ARKit-120.png",
+      "filename" : "Icon-60@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "ARKit-180.png",
+      "filename" : "Icon-60@3x.png",
       "scale" : "3x"
     },
     {
@@ -56,7 +56,7 @@
     {
       "size" : "20x20",
       "idiom" : "ipad",
-      "filename" : "ARKit-41.png",
+      "filename" : "Icon-Spotlight-40.png",
       "scale" : "2x"
     },
     {
@@ -67,7 +67,7 @@
     {
       "size" : "29x29",
       "idiom" : "ipad",
-      "filename" : "ARKit-58.png",
+      "filename" : "Icon-Small@2x-1.png",
       "scale" : "2x"
     },
     {
@@ -78,25 +78,25 @@
     {
       "size" : "40x40",
       "idiom" : "ipad",
-      "filename" : "ARKit-80.png",
+      "filename" : "Icon-Spotlight-40@2x-1.png",
       "scale" : "2x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "ARKit-76.png",
+      "filename" : "Icon-76.png",
       "scale" : "1x"
     },
     {
       "size" : "76x76",
       "idiom" : "ipad",
-      "filename" : "ARKit-152.png",
+      "filename" : "Icon-76@2x.png",
       "scale" : "2x"
     },
     {
       "size" : "83.5x83.5",
       "idiom" : "ipad",
-      "filename" : "ARKit-167.png",
+      "filename" : "Icon-iPadPro@2x.png",
       "scale" : "2x"
     },
     {
