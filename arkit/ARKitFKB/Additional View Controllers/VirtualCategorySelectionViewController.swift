@@ -18,18 +18,14 @@ class ObjectCell: UITableViewCell {
     static let reuseIdentifier = "ObjectCell"
     
     @IBOutlet weak var objectTitleLabel: UILabel!
-    @IBOutlet weak var objectImageView: UIImageView!
     
     var element: Any? {
         didSet {
             if let category = element as? VirtualCategoryDefinition {
                 objectTitleLabel.text = category.category
-                objectImageView.image = UIImage()
             } else if let object = element as? VirtualElementDefinition {
                 objectTitleLabel.text = object.displayName
-                objectImageView.image = UIImage()
             }
-            
         }
     }
 }

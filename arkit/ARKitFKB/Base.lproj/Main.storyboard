@@ -129,10 +129,17 @@
                                     <action selector="presentPlanesSwitchValueChanged:" destination="BV1-FR-VrT" eventType="valueChanged" id="VU7-gZ-hxh"/>
                                 </connections>
                             </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Planes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ySB-pf-jrS">
+                                <rect key="frame" x="257.5" y="85.5" width="45.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="SuF-Os-zmb" firstAttribute="trailing" secondItem="E6c-py-dvH" secondAttribute="trailing" id="35g-18-nn3"/>
+                            <constraint firstItem="ySB-pf-jrS" firstAttribute="centerY" secondItem="vIe-IZ-NDb" secondAttribute="centerY" id="3IU-zg-JAb"/>
                             <constraint firstItem="BgI-fb-Vqi" firstAttribute="trailing" secondItem="E6c-py-dvH" secondAttribute="trailing" constant="-15" id="6c1-k7-y99"/>
                             <constraint firstAttribute="bottom" secondItem="E6c-py-dvH" secondAttribute="bottom" id="6h6-BI-mhL"/>
                             <constraint firstItem="GC3-i3-RpZ" firstAttribute="trailing" secondItem="GBj-4O-Whc" secondAttribute="trailing" id="6oh-3J-K0J"/>
@@ -141,6 +148,7 @@
                             <constraint firstItem="9e0-zv-RiN" firstAttribute="top" secondItem="E6c-py-dvH" secondAttribute="top" constant="15" id="FTS-AH-WBr"/>
                             <constraint firstItem="j8v-6q-UBb" firstAttribute="trailing" secondItem="E6c-py-dvH" secondAttribute="trailing" constant="-15" id="Iz6-94-ZyB"/>
                             <constraint firstItem="BgI-fb-Vqi" firstAttribute="leading" secondItem="9e0-zv-RiN" secondAttribute="trailing" constant="15" id="MwJ-LS-qaQ"/>
+                            <constraint firstItem="vIe-IZ-NDb" firstAttribute="leading" secondItem="ySB-pf-jrS" secondAttribute="trailing" constant="8" id="Tfs-Ec-YHf"/>
                             <constraint firstItem="SuF-Os-zmb" firstAttribute="top" secondItem="E6c-py-dvH" secondAttribute="top" id="UMK-or-VVf"/>
                             <constraint firstItem="BgI-fb-Vqi" firstAttribute="top" secondItem="GBj-4O-Whc" secondAttribute="top" constant="20" id="V7S-nn-Lcz"/>
                             <constraint firstItem="cw9-KS-z6m" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" constant="16" id="YGd-0Z-Elk"/>
@@ -290,17 +298,13 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAR-uJ-nmY">
-                                                        <rect key="frame" x="53" y="10" width="200" height="30"/>
+                                                        <rect key="frame" x="16" y="7" width="235" height="30"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K1e-G9-g3C">
-                                                        <rect key="frame" x="15" y="10" width="30" height="30"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    </imageView>
                                                 </subviews>
                                             </view>
                                             <vibrancyEffect>
@@ -312,7 +316,6 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="objectImageView" destination="K1e-G9-g3C" id="4VU-sM-GtS"/>
                                     <outlet property="objectTitleLabel" destination="dAR-uJ-nmY" id="8qa-vO-JCR"/>
                                 </connections>
                             </tableViewCell>
@@ -327,7 +330,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a7J-OO-ac9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="744" y="215"/>
+            <point key="canvasLocation" x="744" y="214.99250374812596"/>
         </scene>
     </scenes>
     <resources>
