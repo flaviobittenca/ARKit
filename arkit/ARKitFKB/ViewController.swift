@@ -69,6 +69,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     var presentedAddFloorActionSheet: Bool = false
+    var groundMaterialEnabled: Bool = false
     
     // MARK: - UI Elements
     
@@ -82,6 +83,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     @IBOutlet weak var restartExperienceButton: UIButton!
     @IBOutlet weak var objectsCollectionView: UIView!
     @IBOutlet weak var objectsHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var presentPlanesSwitch: UISwitch!
     
     var objectsCollectionNibView: ObjectsCollectionView?
     
@@ -100,6 +102,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         objectsCollectionNibView?.frame.size.width = UIScreen.main.bounds.width
         objectsCollectionNibView?.delegate = self
         objectsCollectionView.addSubview(objectsCollectionNibView!)
+        presentPlanesSwitch.isOn = false
         
         Setting.registerDefaults()
 		setupUIControls()
@@ -343,7 +346,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         
-        let plane = Plane(anchor)
+        let plane = Plane(anchor, with: groundMaterialEnabled)
 		planes[anchor] = plane
 		node.addChildNode(plane)
 		
@@ -442,5 +445,23 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 			textManager.showAlert(title: title, message: message, actions: [])
 		}
 	}
+    
+    @IBAction func presentPlanesSwitchValueChanged(_ sender: UISwitch) {
+        groundMaterialEnabled = sender.isOn
+        
+        if sender.isOn {
+            planes.values.forEach {
+                if $0.tronGround {
+                    $0.setCurrentMaterial()
+                }
+            }
+        } else {
+            planes.values.forEach {
+                if $0.tronGround {
+                    $0.setTransparentGroundMaterial()
+                }
+            }
+        }
+    }
     
 }

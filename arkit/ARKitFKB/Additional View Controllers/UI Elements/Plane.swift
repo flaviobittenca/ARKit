@@ -16,13 +16,14 @@ class Plane: SCNNode {
     var anchor: ARPlaneAnchor
     var focusSquare: FocusSquare?
     var groundPlane: SCNPlane?
+    var currentMaterial: SCNMaterial?
     var tronGround: Bool = true
     // MARK: - Initialization
     
-    init(_ anchor: ARPlaneAnchor) {
+    init(_ anchor: ARPlaneAnchor, with groundMaterial: Bool) {
         self.anchor = anchor
         super.init()
-        initGroundPlane()
+        initGroundPlane(with: groundMaterial)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,8 +37,22 @@ class Plane: SCNNode {
         updateGroundPlane()
     }
     
-    func initGroundPlane() {
+    func initGroundPlane(with groundMaterial: Bool) {
         groundPlane = SCNPlane(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z))
+        if groundMaterial {
+            setDefaultGroundMaterial()
+        } else {
+            setTransparentGroundMaterial()
+        }
+        let planeNode = SCNNode(geometry: groundPlane)
+        planeNode.position = SCNVector3Make(anchor.center.x, 0, anchor.center.z)
+        // Planes in SceneKit are vertical by default so we need to rotate 90degrees to match
+        // planes in ARKit
+        planeNode.transform = SCNMatrix4MakeRotation(-.pi / 2.0, 1.0, 0.0, 0.0)
+        //setTextureScale()
+        addChildNode(planeNode)
+    }
+    private func getTronMaterial() -> SCNMaterial {
         let material = SCNMaterial()
         material.diffuse.contents = #imageLiteral(resourceName: "tronPlane")
         material.diffuse.wrapS = .repeat
@@ -48,29 +63,58 @@ class Plane: SCNNode {
         material.metalness.wrapT = .repeat
         material.normal.wrapS = .repeat
         material.normal.wrapT = .repeat
-        
+        return material
+    }
+    private func setDefaultGroundMaterial() {
+        currentMaterial = getTronMaterial()
+        groundPlane?.materials = [currentMaterial!]
+        tronGround = true
+    }
+    
+    func setCurrentMaterial() {
+        if let material = currentMaterial {
+            groundPlane?.materials = [material]
+        }
+    }
+    
+    func setTransparentGroundMaterial() {
+
+        let material = SCNMaterial()
+        material.diffuse.contents = #imageLiteral(resourceName: "transparentPlane")
+        material.diffuse.wrapS = .repeat
+        material.diffuse.wrapT = .repeat
+        material.roughness.wrapS = .repeat
+        material.roughness.wrapT = .repeat
+        material.metalness.wrapS = .repeat
+        material.metalness.wrapT = .repeat
+        material.normal.wrapS = .repeat
+        material.normal.wrapT = .repeat
         groundPlane?.materials = [material]
-        let planeNode = SCNNode(geometry: groundPlane)
-        planeNode.position = SCNVector3Make(anchor.center.x, 0, anchor.center.z)
-        // Planes in SceneKit are vertical by default so we need to rotate 90degrees to match
-        // planes in ARKit
-        planeNode.transform = SCNMatrix4MakeRotation(-.pi / 2.0, 1.0, 0.0, 0.0)
-        //setTextureScale()
-        addChildNode(planeNode)
+        currentMaterial = getTronMaterial()
+        tronGround = true
     }
     
     func setFloorMaterial(with name: String? = nil) {
         if let assetName = name {
-            groundPlane?.materials.removeAll()
             let material = SCNMaterial()
             material.diffuse.contents = UIImage(named: "\(assetName)-albedo")
             material.roughness.contents = UIImage(named: "\(assetName)-roughness")
             material.normal.contents = UIImage(named: "\(assetName)-normal")
             material.metalness.contents = UIImage(named: "\(assetName)-metalness")
-            groundPlane?.materials = [material]
+            material.diffuse.wrapS = .repeat
+            material.diffuse.wrapT = .repeat
+            material.roughness.wrapS = .repeat
+            material.roughness.wrapT = .repeat
+            material.metalness.wrapS = .repeat
+            material.metalness.wrapT = .repeat
+            material.normal.wrapS = .repeat
+            material.normal.wrapT = .repeat
+            currentMaterial = material
+            groundPlane?.materials = [currentMaterial!]
             tronGround = false
         }
     }
+    
     
     func updateGroundPlane() {
         // As the user moves around the extend and location of the plane

@@ -123,6 +123,12 @@
                                     <constraint firstAttribute="height" id="V4o-CE-Q1I"/>
                                 </constraints>
                             </view>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vIe-IZ-NDb">
+                                <rect key="frame" x="311" y="79" width="51" height="31"/>
+                                <connections>
+                                    <action selector="presentPlanesSwitchValueChanged:" destination="BV1-FR-VrT" eventType="valueChanged" id="VU7-gZ-hxh"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -141,8 +147,10 @@
                             <constraint firstItem="cw9-KS-z6m" firstAttribute="top" secondItem="RLh-bf-1c3" secondAttribute="top" constant="15" id="cR8-HN-T5p"/>
                             <constraint firstItem="9e0-zv-RiN" firstAttribute="leading" secondItem="E6c-py-dvH" secondAttribute="leading" constant="115" id="iIf-WZ-kZj"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="trailing" secondItem="E6c-py-dvH" secondAttribute="trailing" id="lHd-lf-g1u"/>
+                            <constraint firstItem="vIe-IZ-NDb" firstAttribute="trailing" secondItem="BgI-fb-Vqi" secondAttribute="trailing" id="lfY-E3-GVY"/>
                             <constraint firstItem="GC3-i3-RpZ" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" id="pIp-yw-xlm"/>
                             <constraint firstItem="GC3-i3-RpZ" firstAttribute="bottom" secondItem="GBj-4O-Whc" secondAttribute="bottom" id="r5M-GL-I2m"/>
+                            <constraint firstItem="vIe-IZ-NDb" firstAttribute="top" secondItem="BgI-fb-Vqi" secondAttribute="bottom" constant="16" id="rON-MX-o2q"/>
                             <constraint firstItem="GBj-4O-Whc" firstAttribute="bottom" secondItem="j8v-6q-UBb" secondAttribute="bottom" constant="15" id="vm8-IH-8Qx"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GBj-4O-Whc"/>
@@ -153,6 +161,7 @@
                         <outlet property="messagePanel" destination="9e0-zv-RiN" id="pKf-hp-Dvx"/>
                         <outlet property="objectsCollectionView" destination="GC3-i3-RpZ" id="Q4B-BN-40e"/>
                         <outlet property="objectsHeightConstraint" destination="V4o-CE-Q1I" id="FTM-hP-A8s"/>
+                        <outlet property="presentPlanesSwitch" destination="vIe-IZ-NDb" id="2eL-6W-I5D"/>
                         <outlet property="restartExperienceButton" destination="BgI-fb-Vqi" id="Yfh-W4-qlO"/>
                         <outlet property="sceneView" destination="E6c-py-dvH" id="Gr4-Uw-Z4A"/>
                         <outlet property="settingsButton" destination="j8v-6q-UBb" id="wZV-ib-D05"/>
