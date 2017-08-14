@@ -1,9 +1,9 @@
 /*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Convenience extensions on ARSCNView for hit testing
-*/
+ See LICENSE folder for this sample’s licensing information.
+ 
+ Abstract:
+ Convenience extensions on ARSCNView for hit testing
+ */
 
 import ARKit
 
@@ -79,9 +79,9 @@ extension ARSCNView {
         let maxAngleInDeg = min(coneOpeningAngleInDegrees, 360) / 2
         let maxAngle = (maxAngleInDeg / 180) * .pi
         
-        let points = features.points
+        let points = features.__points
         
-        for i in 0...features.count {
+        for i in 0...features.__count {
             
             let feature = points.advanced(by: Int(i))
             let featurePos = feature.pointee
@@ -151,13 +151,13 @@ extension ARSCNView {
             return nil
         }
         
-        let points = features.points
+        let points = features.__points
         
         // Determine the point from the whole point cloud which is closest to the hit test ray.
         var closestFeaturePoint = origin
         var minDistance = Float.greatestFiniteMagnitude
         
-        for i in 0...features.count {
+        for i in 0...features.__count {
             let feature = points.advanced(by: Int(i))
             let featurePos = feature.pointee
             
@@ -183,3 +183,4 @@ extension ARSCNView {
     }
     
 }
+

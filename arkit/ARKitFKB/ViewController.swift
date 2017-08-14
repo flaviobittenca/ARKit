@@ -16,13 +16,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     // MARK: - ARKit Config Properties
     
     var screenCenter: CGPoint?
-    var trackingFallbackTimer: Timer?
     
     let session = ARSession()
-    let fallbackConfiguration = ARSessionConfiguration()
-    
-    let standardConfiguration: ARWorldTrackingSessionConfiguration = {
-        let configuration = ARWorldTrackingSessionConfiguration()
+    let standardConfiguration: ARWorldTrackingConfiguration = {
+        let configuration = ARWorldTrackingConfiguration()
         configuration.planeDetection = .horizontal
         return configuration
     }()
@@ -109,22 +106,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         setupScene()
     }
 
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		
-		// Prevent the screen from being dimmed after a while.
-		UIApplication.shared.isIdleTimerDisabled = true
-		
-		if ARWorldTrackingSessionConfiguration.isSupported {
-			// Start the ARSession.
-			resetTracking()
-		} else {
-			// This device does not support 6DOF world tracking.
-			let sessionErrorMsg = "This app requires world tracking. World tracking is only available on iOS devices with A9 processor or newer. " +
-			"Please quit the application."
-			displayErrorMessage(title: "Unsupported platform", message: sessionErrorMsg, allowRestart: false)
-		}
-	}
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // Prevent the screen from being dimmed after a while.
+        UIApplication.shared.isIdleTimerDisabled = true
+        
+        if ARWorldTrackingConfiguration.isSupported {
+            // Start the ARSession.
+            resetTracking()
+        } else {
+            // This device does not support 6DOF world tracking.
+            let sessionErrorMsg = "This app requires world tracking. World tracking is only available on iOS devices with A9 processor or newer. " +
+            "Please quit the application."
+            displayErrorMessage(title: "Unsupported platform", message: sessionErrorMsg, allowRestart: false)
+        }
+    }
 	
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
@@ -202,50 +199,39 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 		}
 	}
     
-	func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
+    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
         textManager.showTrackingQualityInfo(for: camera.trackingState, autoHide: true)
-
+        
         switch camera.trackingState {
         case .notAvailable:
-            textManager.escalateFeedback(for: camera.trackingState, inSeconds: 5.0)
+            fallthrough
         case .limited:
-            // After 10 seconds of limited quality, fall back to 3DOF mode.
-            trackingFallbackTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false, block: { _ in
-                self.session.run(self.fallbackConfiguration)
-                self.textManager.showMessage("Falling back to 3DOF tracking.")
-                self.trackingFallbackTimer?.invalidate()
-                self.trackingFallbackTimer = nil
-            })
+            textManager.escalateFeedback(for: camera.trackingState, inSeconds: 3.0)
         case .normal:
             textManager.cancelScheduledMessage(forType: .trackingStateEscalation)
-            if trackingFallbackTimer != nil {
-                trackingFallbackTimer!.invalidate()
-                trackingFallbackTimer = nil
-            }
         }
-	}
+    }
 	
     func session(_ session: ARSession, didFailWithError error: Error) {
-
         guard let arError = error as? ARError else { return }
-
+        
         let nsError = error as NSError
-		var sessionErrorMsg = "\(nsError.localizedDescription) \(nsError.localizedFailureReason ?? "")"
-		if let recoveryOptions = nsError.localizedRecoveryOptions {
-			for option in recoveryOptions {
-				sessionErrorMsg.append("\(option).")
-			}
-		}
-
+        var sessionErrorMsg = "\(nsError.localizedDescription) \(nsError.localizedFailureReason ?? "")"
+        if let recoveryOptions = nsError.localizedRecoveryOptions {
+            for option in recoveryOptions {
+                sessionErrorMsg.append("\(option).")
+            }
+        }
+        
         let isRecoverable = (arError.code == .worldTrackingFailed)
-		if isRecoverable {
-			sessionErrorMsg += "\nYou can try resetting the session or quit the application."
-		} else {
-			sessionErrorMsg += "\nThis is an unrecoverable error that requires to quit the application."
-		}
-		
-		displayErrorMessage(title: "We're sorry!", message: sessionErrorMsg, allowRestart: isRecoverable)
-	}
+        if isRecoverable {
+            sessionErrorMsg += "\nYou can try resetting the session or quit the application."
+        } else {
+            sessionErrorMsg += "\nThis is an unrecoverable error that requires to quit the application."
+        }
+        
+        displayErrorMessage(title: "We're sorry!", message: sessionErrorMsg, allowRestart: isRecoverable)
+    }
 	
 	func sessionWasInterrupted(_ session: ARSession) {
 		textManager.blurBackground()
@@ -327,22 +313,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     // MARK: - Planes
 	
 	var planes = [ARPlaneAnchor: Plane]()
-	
-//    func askToInsertFloor(plane: Plane) {
-//        let actionSheetController: UIAlertController = UIAlertController(title: "Add floor", message: "Would you like to add a floor?", preferredStyle: .actionSheet)
-//        let yesAction: UIAlertAction = UIAlertAction(title: "Yes", style: .default) { action -> Void in
-//            plane.setFloorMaterial(with: self.lastSelectedFloorName)
-//        }
-//        let noAction: UIAlertAction = UIAlertAction(title: "No", style: .default) { action -> Void in
-//
-//        }
-//        actionSheetController.addAction(yesAction)
-//        actionSheetController.addAction(noAction)
-//        actionSheetController.popoverPresentationController?.sourceView = self.addObjectButton
-//        actionSheetController.popoverPresentationController?.sourceRect = self.addObjectButton.bounds
-//
-//        self.present(actionSheetController, animated: true, completion: nil)
-//    }
     
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         
@@ -371,12 +341,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 	
 	func resetTracking() {
 		session.run(standardConfiguration, options: [.resetTracking, .removeExistingAnchors])
-		
-		// reset timer
-		if trackingFallbackTimer != nil {
-			trackingFallbackTimer!.invalidate()
-			trackingFallbackTimer = nil
-		}
 		
 		textManager.scheduleMessage("FIND A SURFACE TO PLACE AN OBJECT",
 		                            inSeconds: 7.5,
