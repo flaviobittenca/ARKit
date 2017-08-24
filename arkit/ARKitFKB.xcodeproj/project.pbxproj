@@ -34,6 +34,7 @@
 		C46356671EF9CC500080C8D9 /* SceneExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46356661EF9CC480080C8D9 /* SceneExtensions.swift */; };
 		C46356681EF9CC530080C8D9 /* VirtualElementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46356651EF9CB1A0080C8D9 /* VirtualElementManager.swift */; };
 		C4E87DD91EA6B40F002117D6 /* VirtualElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E87DD81EA6B40F002117D6 /* VirtualElement.swift */; };
+		EBBF67FAF50B4F8928B6700D /* Pods_ARKitFKB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 582A74533D088290B5F2BC67 /* Pods_ARKitFKB.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		39C0B9571E9C6B1F003FCA0C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		39C0B9581E9C6B1F003FCA0C /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		39D8DC1A1E8ADAE600386B05 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		582A74533D088290B5F2BC67 /* Pods_ARKitFKB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ARKitFKB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8861DA2F1F33589B00213322 /* ObjectsCollectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectsCollectionView.xib; sourceTree = "<group>"; };
 		8861DA311F3359D800213322 /* ObjectsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectsCollectionView.swift; sourceTree = "<group>"; };
 		B58EA2E21F338F46008F5B29 /* ObjectCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ObjectCollectionCell.xib; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBBF67FAF50B4F8928B6700D /* Pods_ARKitFKB.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +163,8 @@
 				3929C4891E89EC2C00E00B60 /* Products */,
 				1807E2C8BCCD2BA2E6A7CA87 /* Configuration */,
 				75696C7D0E0CF81D46502904 /* LICENSE */,
+				8A0C5E2F50E924E69F706A5E /* Pods */,
+				D7A76AAEB503BFB8398A79CC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -206,6 +211,13 @@
 			path = CollectionView;
 			sourceTree = "<group>";
 		};
+		8A0C5E2F50E924E69F706A5E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		C40DF57B1EC2330700D9D59E /* Virtual Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,6 +228,14 @@
 			path = "Virtual Elements";
 			sourceTree = "<group>";
 		};
+		D7A76AAEB503BFB8398A79CC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				582A74533D088290B5F2BC67 /* Pods_ARKitFKB.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -223,9 +243,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3929C49A1E89EC2C00E00B60 /* Build configuration list for PBXNativeTarget "ARKitFKB" */;
 			buildPhases = (
+				8E24D40DCAB4612A4A718F60 /* [CP] Check Pods Manifest.lock */,
 				3929C4841E89EC2C00E00B60 /* Sources */,
 				3929C4851E89EC2C00E00B60 /* Frameworks */,
 				3929C4861E89EC2C00E00B60 /* Resources */,
+				4B7E0621D2AAD9ABF7FB4B0B /* [CP] Embed Pods Frameworks */,
+				9DC840F8E61AE84A8DA21977 /* [CP] Copy Pods Resources */,
+				B5AEED571F4F6F5100D86C98 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -288,6 +312,70 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4B7E0621D2AAD9ABF7FB4B0B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARKitFKB/Pods-ARKitFKB-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8E24D40DCAB4612A4A718F60 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ARKitFKB-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9DC840F8E61AE84A8DA21977 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ARKitFKB/Pods-ARKitFKB-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5AEED571F4F6F5100D86C98 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" d6df47d4de5cf53747dfe9ffbb8335710f43711e 07a44c6754407b007c9c3fa40c27c6290376ce54068e1607ffd532d42caa9e59";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3929C4841E89EC2C00E00B60 /* Sources */ = {
